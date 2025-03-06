@@ -13,11 +13,15 @@
       <a-assets>
         <!-- 3Dモデルを読み込む -->
         <a-asset-item id="book" src="book.glb" scale="1 1 1"></a-asset-item>
+        <a-asset-item id="magic_circle" src="magic_circle.glb" scale="1 1 1"></a-asset-item>
+        <a-asset-item id="text" src="text.glb" scale="1 1 1"></a-asset-item>
       </a-assets>
       <!-- マーカーを設定する -->
       <a-marker type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
-        <a-entity gltf-model="#book" animation-mixer = "loop : 1"></a-entity>
+        <a-entity gltf-model="#book"></a-entity>
+        <a-entity gltf-model="#magic_circle" animation-mixer></a-entity>
+        <a-entity gltf-model="#text" animation-mixer></a-entity>
       </a-marker>
       <!-- カメラを追加 -->
       <a-entity camera></a-entity>
