@@ -9,13 +9,13 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden">
+      <audio src="Blessing feat. VOCALOIDS.mp3" autoplay></audio>
     <!-- シーンの作成、VRモードのUI非表示 -->
     <a-scene embedded arjs vr-mode-ui="enabled: false">
       <a-assets>
         <!-- 3Dモデルを読み込む -->
         <a-asset-item id="book" src="book.glb" scale="1 1 1"></a-asset-item>
       </a-assets>
-      <audio src="Blessing feat. VOCALOIDS.mp3" autoplay></audio>
       <!-- マーカーを設定する -->
       <a-marker type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
