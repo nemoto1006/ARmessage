@@ -3,8 +3,8 @@
   <head>
     <!-- A-Frameを読み込む -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <!-- AR.jsを読み込む -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <!-- AR.jsを読み込む（安定版） -->
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden">
     <!-- シーンの作成、VRモードのUI非表示 -->
@@ -12,18 +12,60 @@
       <a-assets>
         <!-- 3Dモデルを読み込む -->
         <a-asset-item id="book" src="book.glb" scale="1 1 1"></a-asset-item>
+        <!-- 音声ファイルを読み込む -->
+        <a-asset-item id="music" src="/Blessing-feat-VOCALOIDS.mp3"></a-asset-item>
       </a-assets>
       <!-- マーカーを設定する -->
       <a-marker type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" rotation="0 0 0"></a-entity>
+        <!-- 音声を追加 -->
+        <a-entity id="sound-entity" sound="src: #music; autoplay: false; loop: true; volume: 0.5"></a-entity>
       </a-marker>
       <!-- カメラを追加 -->
       <a-entity camera></a-entity>
     </a-scene>
   </body>
   <script>
-      //glTFの表示が暗くなる問題に対処
-      document.querySelector("a-scene").renderer.gammaOutput=true;
+      // glTFの表示が暗くなる問題に対処
+    document.querySelector('a-scene').addEventListener('loaded', function () {
+      this.renderer.outputEncoding = THREE.sRGBEncoding;
+    });
+
+    // マーカーイベントを処理するカスタムコンポーネント
+    AFRAME.registerComponent('markerhandler', {
+      init: function () {
+        const marker = this.el;
+        const soundEntity = marker.querySelector('#sound-entity');
+
+        // 音声読み込みの確認
+        soundEntity.addEventListener('sound-loaded', function () {
+          console.log('Sound file loaded successfully');
+        });
+        soundEntity.addEventListener('sound-error', function (e) {
+          console.error('Sound file failed to load:', e);
+        });
+
+        // マーカーが検出されたとき
+        marker.addEventListener('markerFound', function () {
+          console.log('Marker detected');
+          try {
+            soundEntity.components.sound.playSound(); // 音楽を再生
+          } catch (e) {
+            console.error('Sound playback failed:', e);
+          }
+        });
+
+        // マーカーが見えなくなったとき
+        marker.addEventListener('markerLost', function () {
+          console.log('Marker lost');
+          try {
+            soundEntity.components.sound.pauseSound(); // 音楽を一時停止
+          } catch (e) {
+            console.error('Pause failed:', e);
+          }
+        });
+      }
+    });
   </script>
 </html>
