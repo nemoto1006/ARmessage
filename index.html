@@ -14,12 +14,14 @@
       <a-assets>
         <!-- 3Dモデルを読み込む -->
         <a-asset-item id="book" src="book.glb" scale="1 1 1"></a-asset-item>
-        <audio id="audio" src="Blessing feat. VOCALOIDS.mp3" autoplay></audio>
       </a-assets>
       <!-- マーカーを設定する -->
       <a-marker id="marker" type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" animation-mixer></a-entity>
+        <a-entity>
+        <audio id="audio" src="Blessing feat. VOCALOIDS.mp3" autoplay="true" loop="true"></audio>
+        </a-entity>
       </a-marker>
       
       <!-- カメラを追加 -->
@@ -29,15 +31,5 @@
   <script>
       //glTFの表示が暗くなる問題に対処
       document.querySelector("a-scene").renderer.gammaOutput=true;
-    // タップを検出したら...
-button.addEventListener('touchstart', () => {
-audio.muted = true; // ミュート有効
-audio.play(); // 動画再生
-audio.pause(); // 動画停止
-audio.muted = false; // ミュート無効
-audio.currentTime = 0; // 開始秒数を戻す
-});
-      // マーカー認識されたら...
-      marker.addEventListener('markerFound', () => {audio.play(); // 動画再生});
   </script>
 </html>
