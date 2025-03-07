@@ -39,7 +39,9 @@
          marker.querySelector('#sound-entity');
          const audio = 
          audioEntity.querySelector('#music');
+         
          audio.components.sound.stopSound();
+         
          marker.addEventListener('markerFound',function(){
            console.log('Marker detected');
            audio.components.sound.playSound();
