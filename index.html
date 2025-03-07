@@ -18,6 +18,7 @@
       <a-marker type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" animation-mixer></a-entity>
+        document.getElementById("music").play();
       </a-marker>
       <!-- カメラを追加 -->
       <a-entity camera></a-entity>
@@ -27,4 +28,7 @@
       //glTFの表示が暗くなる問題に対処
       document.querySelector("a-scene").renderer.gammaOutput=true;
   </script>
+  <audio src="Blessing feat. VOCALOIDS.mp3" id="music" preload="auto">
+   <p>お使いの環境では再生できません。</p>
+</audio>
 </html>
