@@ -19,8 +19,8 @@
       <a-marker id="marker" type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" animation-mixer></a-entity>
-        <a-entity>
-        <audio id="audio" src="Blessing feat. VOCALOIDS.mp3" autoplay="true" loop="true"></audio>
+        <a-entity id="sound-entity">
+        <audio id="music" src="Blessing feat. VOCALOIDS.mp3" loop="true" volume="0.5"></audio>
         </a-entity>
       </a-marker>
       
@@ -31,5 +31,25 @@
   <script>
       //glTFの表示が暗くなる問題に対処
       document.querySelector("a-scene").renderer.gammaOutput=true;
+
+     AFRAME.registerComponent('markerhandler',{
+       init: function(){
+         const marker = this.el;
+         const audioEntity = 
+         marker.querySelector('#sound-entity');
+         const audio = 
+         audioEntity.querySelector('#music');
+         audio.components.sound.stopSound();
+         marker.addEventListener('markerFound',function(){
+           console.log('Marker detected');
+           audio.components.sound.playSound();
+         });
+         marker.addEventListener('makkerLost',function(){
+           console.log('Marker lost');
+           audio.components.sound.pauseSound();
+         });
+       }
+     });
+    document.querySelector('a-marker').setAttribute('markerhandler','');
   </script>
 </html>
