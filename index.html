@@ -12,11 +12,15 @@
       <a-assets>
         <!-- 3Dモデルを読み込む -->
         <a-asset-item id="book" src="book.glb" scale="1 1 1"></a-asset-item>
+        <!-- 音声ファイルを読み込む -->
+        <a-asset-item id="music" src="./Blessing feat. VOCALOIDS.mp3"></a-asset-item>
       </a-assets>
       <!-- マーカーを設定する -->
       <a-marker type="pattern" url="pattern-maker.patt">
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" rotation="0 0 0"></a-entity>
+        <!-- 音声を追加 -->
+        <a-entity id="sound-entity" sound="src: #music; autoplay: false; loop: true; volume: 0.5"></a-entity>
       </a-marker>
       <!-- カメラを追加 -->
       <a-entity camera></a-entity>
@@ -25,5 +29,25 @@
   <script>
       //glTFの表示が暗くなる問題に対処
       document.querySelector("a-scene").renderer.gammaOutput=true;
+
+    // カスタムコンポーネントでマーカーイベントを処理
+    AFRAME.registerComponent('markerhandler', {
+      init: function () {
+        const marker = this.el;
+        const soundEntity = marker.querySelector('#sound-entity');
+
+        // マーカーが検出されたとき
+        marker.addEventListener('markerFound', function () {
+          console.log('Marker detected');
+          soundEntity.components.sound.playSound(); // 音声を再生
+        });
+
+        // マーカーが見えなくなったとき
+        marker.addEventListener('markerLost', function () {
+          console.log('Marker lost');
+          soundEntity.components.sound.pauseSound(); // 音声を一時停止
+        });
+      }
+    });
   </script>
 </html>
