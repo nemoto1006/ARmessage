@@ -20,7 +20,7 @@
         <!-- 3Dモデルを呼び出す -->
         <a-entity gltf-model="#book" animation-mixer></a-entity>
         <a-entity id="sound-entity">
-          <audio id="music" src="Blessing feat. VOCALOIDS.mp3" loop="true" volume="0.5"></audio>
+          <a-sound id="music" src="Blessing feat. VOCALOIDS.mp3" loop="true" volume="0.5"></a-sound>
         </a-entity>
       </a-marker>
       
@@ -35,20 +35,16 @@
     AFRAME.registerComponent('markerhandler', {
       init: function () {
         const marker = this.el;
-        const audioEntity = marker.querySelector('#sound-entity');
-        const audio = audioEntity.querySelector('#music');
-        
-        // 音声の再生/停止を直接制御
-        audio.pause(); // 初期状態では音声を停止
+        const audio = marker.querySelector('#music');
         
         marker.addEventListener('markerFound', function () {
           console.log('Marker detected');
-          audio.play(); // マーカーが見つかったときに音声を再生
+          audio.components.sound.playSound(); // マーカーが見つかったときに音声を再生
         });
         
         marker.addEventListener('markerLost', function () { // 修正されたイベント名
           console.log('Marker lost');
-          audio.pause(); // マーカーが失われたときに音声を停止
+          audio.components.sound.pauseSound(); // マーカーが失われたときに音声を停止
         });
       }
     });
