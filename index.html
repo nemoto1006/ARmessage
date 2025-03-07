@@ -29,6 +29,14 @@
   <script>
       //glTFの表示が暗くなる問題に対処
       document.querySelector("a-scene").renderer.gammaOutput=true;
+    // タップを検出したら...
+button.addEventListener('touchstart', () => {
+audio.muted = true; // ミュート有効
+audio.play(); // 動画再生
+audio.pause(); // 動画停止
+audio.muted = false; // ミュート無効
+audio.currentTime = 0; // 開始秒数を戻す
+});
       // マーカー認識されたら...
       marker.addEventListener('markerFound', () => {audio.play(); // 動画再生});
   </script>
