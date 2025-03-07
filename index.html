@@ -30,8 +30,9 @@
   </body>
   <script>
     // glTFの表示が暗くなる問題に対処
-    document.querySelector("a-scene").renderer.gammaOutput = true;
-
+    document.querySelector('a-scene').addEventListener('loaded', function () {
+  this.renderer.gammaOutput = true;
+});
     AFRAME.registerComponent('markerhandler', {
       init: function () {
         const marker = this.el;
